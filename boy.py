@@ -153,6 +153,8 @@ class Boy:
     def draw(self):
         self.state_machine.draw()
         self.font.draw(self.x-10, self.y + 50, f'{self.ball_count:02d}', (255, 255, 0))
+        #충돌 영역 그리기
+        draw_rectangle(*self.get_bb()) # *는 튜플의 내용을 풀어서 4개의 인자로 전달
 
     def fire_ball(self):
         if self.ball_count > 0:
@@ -161,9 +163,11 @@ class Boy:
             game_world.add_object(ball)
 
     def get_bb(self):
-        # fill here
+        # 4개의 값을 리턴하는데, 사실 한개의 튜플
+        return self.x - 20, self.y - 50, self.x + 20, self.y + 50
         pass
 
     def handle_collision(self, group, other):
-        # fill here
+        if group == 'boy:ball':
+            self.ball_count += 1
         pass
